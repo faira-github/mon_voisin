@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<div class="row">
+    {% for annonces in annonces %}
+    <article class="col-12 col-md-3 mt-5">
+
+        <h4>{{ annonces.annonceTitle}}</h4>
+        <div class="card" style="width: 15rem;">
+            <img class="card-img-top" src="images/annonce{{ annonces.annoncePicture}}" alt="Card image cap"  class="img-fluid">
+            <div class="card-body">
+                <p class="card-text">{{ annonces.annonceDescription|raw}}</p>
+                <a href="{{ path('home_article', {'id': annonces.id} ) }}" class="btn btn-warning ">En savoir plus</a>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}

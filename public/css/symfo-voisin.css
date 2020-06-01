@@ -1,0 +1,37 @@
+body{
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    background: url('./asset/images/useradmin/voisins.png') no-repeat;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.bg-grey{
+    background-color:#e7e7e7;
+}
+.image-height{
+    height:140px;
+    width:100%;
+}
+
+section img{
+    width:300px;
+    height:300px;
+}
+.border{
+    border-radius: 20px;
+}
+section .f-family{
+    font-family: 'Gloria Hallelujah', cursive;
+}
+footer ul li a{
+    
+    color: white;
+}
+footer ul li{
+    list-style-type: none;
+}
+
+.text-blanc{
+    color: white;
+}

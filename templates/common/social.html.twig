@@ -1,0 +1,5 @@
+<ul class="list-unstyled">
+    {% for link in social %}
+    <li class="d-inline mx-1"><a href="{{ link.lien }}" class="text-light" target="new"><i class="{{ link.icone }}" aria-hidden="true"></i></a></li>
+    {% endfor %}
+</ul>

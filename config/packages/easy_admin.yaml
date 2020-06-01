@@ -1,0 +1,167 @@
+easy_admin:
+  site_name: "Mon Voisin d'accoté"
+  formats:
+    date: d/m/Y
+  design:
+    brand_color: '#1ABC9C'
+    form_theme:
+      - '@EasyAdmin/form/bootstrap_4.html.twig'
+      - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+    menu:
+      # -
+      #   label: 'Homepage'
+      #   icon: 'home'
+      #   entity: MyHome
+      # -
+      #   label: 'Carousel'
+      #   icon: 'sliders'
+      #   entity: Slider
+      -
+        label: 'La home'
+        icon: 'home'
+        children:
+          - { entity: Annonce, icon: 'home' }
+          - { entity: Slider, icon: 'sliders' }
+      -
+        label: 'Menus'
+      -
+        label: 'Réseaux sociaux'
+        icon: 'comments'
+        entity: SocialNetwork
+      -
+        label: 'Utilisateur'
+        icon: 'user-o'
+        entity: 'User'
+      - 
+        label: 'Categorie'
+        icon: 'map-o'
+        entity: 'Categorie'
+      -
+        label: 'Commentaire'
+        icon: 'commenting'
+        entity: 'Comment'
+      -
+        label: 'Ville'
+        icon: 'heartbeat'
+        entity: 'Ville'
+      -
+        label: 'Quartier'
+        icon: 'universal-access'
+        entity: 'Quartier'
+  entities: 
+    Quartier:
+      class: App\Entity\Quartier
+      list:
+        fields: 
+          - { property: nomQuartier }  
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: villes }
+          - { property: nomQuartier } 
+    Ville:
+      class: App\Entity\Ville
+      list:
+        fields: 
+          - { property: ville }  
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: ville }
+          - { property: quartier } 
+    Comment:
+      class: App\Entity\Comment
+      list:
+        fields: 
+          - { property: author } 
+          - { property: creaTedAt }
+          - { property: article } 
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: author }
+          - { property: content, type: 'fos_ckeditor' }
+          - { property: creaTedAt }
+          - { property: article } 
+      
+    Categorie:
+      class: App\Entity\Categorie
+      list:
+        fields: 
+          - { property: nomCategorie }
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: nomCategorie }
+          - { property: descriptionCategorie, type: 'fos_ckeditor' }
+          - { property: annonces }
+
+    User: 
+      class: App\Entity\User
+      list:
+        fields: 
+          - { property: name }
+          - { property: firstName }
+          - { property: email}
+          - { property: roles}
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: name }
+          - { property: firstName }
+          - { property: email}
+          - { property: roles}
+          - { property: password }
+          - { property: adress }
+          - { property: codePostal }
+          - { property: dateNaissance }
+          - { property: userannonce }
+          - { property: villes }
+          - { property: telephone }
+    Annonce:
+      class: App\Entity\Annonce
+      list:
+        actions: ['-delete']
+        fields:
+          - { property: annoncePublier }
+          - { property: categorys }
+          - { property: annoncePicture, type: image, base_path: '%app.path.annonce%' }
+          - { property: annonceTitle }
+      form:
+        fields:
+          - { type: tab, label: 'Assets', icon: 'pencil'}
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: categorys }
+          - { property: annonceTitle } 
+          - { property: annonceDescription, type: 'fos_ckeditor' }
+          - { property: budget, help: 'saisir un prix au format décimal exemple : 120.45'}
+          - { property: annonceOrder }
+          - { type: 'group', label: 'Image', icon: 'image'}
+          - { property: imageFile, type: file }
+          - { property: imageFile, type: vich_image, label: Image associée, help: 'Votre image doit faire 800px de largeur max' }
+          - { type: tab, label: 'Réglages', icon: 'cog'}
+          - { type: 'group', label: 'Paramètres', icon: 'cog'}
+          - { property: annoncePublier }
+          - { property: CreatedAt }
+    SocialNetwork:
+      class: App\Entity\SocialNetwork
+    Slider:
+      class: App\Entity\Slider
+      list:
+        fields:
+          - { property: image, type: image, base_path: '%app.path.slider%' }
+          - { property: titre }
+      form:
+        fields:
+          - { type: 'group', label: 'Textes', icon: 'font'}
+          - { property: titre }
+          - { property: description, type: fos_ckeditor }
+          - { type: 'group', label: 'Image', icon: 'image'}
+          - { property: imageFile, type: file }
+          - { property: imageFile, type: vich_image, label: Image associée, help: 'Votre image doit faire 1920px de largeur max' }
+

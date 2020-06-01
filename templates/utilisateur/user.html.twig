@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UtilisateurController!{% endblock %}
+
+{% block body %}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle">Inscription</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+
+                    </span>
+                </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">envoyer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_start(formArticle) }}
+    <input type="text" name"nom" placeholder="Nom">
+    <input type="text" name"prenom" placeholder="Prenom">
+    <input type="datetime" name"naissance" placeholder="Date de naissance">
+    <input type="text" name"identifiant" placeholder="Identifiant">
+    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+        placeholder="Enter email">
+    <small id="emailHelp" class="form-text text-muted">Entrer votre adresse email</small>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    <input type="text" name"nom" placeholder="nom">
+{{ form_end(formArticle, {'render_rest': false})}}
+{% endblock %}

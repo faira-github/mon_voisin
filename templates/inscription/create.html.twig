@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
+
+{% block title %}Ajouter une annonce{% endblock %}
+
+{% block body %}
+<section class="pt-5 container">
+    <h2>Ajouter un article</h2>
+    {{ form_start(formArticle, {'action': path('article_create'), 'method': 'POST', 'attr': {'class': 'w-100 form-signin', 'id': 'ArticleType'} }) }}
+    <h5 class="pt-4">Catégorie de l'article</h5>
+    {{ form_widget(formArticle.categorys) }}
+    <h5 class="pt-4">Titre de l'article</h5>
+    {{ form_widget(formArticle.annonceTitle, {'attr': {'placeholder': "Titre de l'article"}})  }}
+    <h5 class="pt-4">Description de l'article</h5>
+    {{form_widget(formArticle.annonceDescription, {'attr': {'placeholder': "Description de l'article"}}) }}
+    <h5 class="pt-4">Votre budget</h5>
+    <div class="d-flex ">
+        <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+        </div>
+        {{ form_widget(formArticle.budget, {'attr': {'placeholder': "Indiquer la sommes"}}) }}
+        <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+        </div>
+    </div>
+    <h5 class="pt-4">Indiquer votre adresse</h5>
+    {{ form_widget(formArticle.adress, {'attr': {'placeholder': "Indiquer votre adresse"}}) }}
+    <h5 class="pt-4">Votre code postale et la ville</h5>
+    <div class="d-flex ">
+        <div class="col-md-6 col-12 px-0">
+            {{ form_widget(formArticle.postalCode, {'attr': {'placeholder': "Code postale"}}) }}
+        </div>
+        <div class="col-md-6 col-12 pr-0">
+            {{ form_widget(formArticle.city, {'attr': {'placeholder': "La ville"}}) }}
+        </div>
+    </div>
+    
+    <h5 class="pt-4">Accepter les conditions générales</h5>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="_remember_me" required> J'accepte les conditions générales
+        </label>
+    </div>
+
+
+    {# <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/> #}
+    <button type="submit" class="btn btn-warning py-2 mt-3 px-3  mb-5">
+        {% if editMode %}
+        Enregistrer
+        {% else %}
+        Ajouter l'article
+        {% endif %}
+    </button>
+
+    {{ form_end(formArticle)}}
+</section>
+{# , {'render_rest': false} #}
+
+{% endblock %}

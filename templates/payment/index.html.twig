@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <a href="" class="mt-2"><i class="fa fa-arrow-left" aria-hidden="true"></i>Retour au panier</a>
+    <div class="row mt-4">
+        <div class="col-12 col-md-4 ">
+            <h4 class="text-primary "><i class="fa fa-user" aria-hidden="true"></i> Coordonnées</h4>
+            <div class=" d-flex">
+                <div class="mr-2">
+                    <a href=""><button type="submit" class="btn btn-warning mt-3 btn-block px-3 py-2">Nouveau
+                            membre</button></a>
+                </div>
+                <a href=""><button type="submit" class="btn btn-light text-dark mt-3 pl-4 pr-5 py-2">Déjà membre ?</button></a>
+            </div>
+            <form class="mt-4" action="{{ path('payment')}}" method="post">
+                {#% if error %}
+            <div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+        {% endif %#}
+                <div class="form-group mt-4">
+                    <input type="email" class="form-control" name="email" id="exampleInputEmail1"
+                        aria-describedby="emailHelp" placeholder="Adresse mail *" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="confirm-email" id="exampleInputEmail2"
+                        aria-describedby="emailHelp" placeholder="Confirmer l'adresse mail *" required>
+                </div>
+                <div class="d-flex">
+                    <div class="form-group mr-2">
+                        <input type="password" class="form-control" name="password" id="exampleInputPassword1"
+                            placeholder="Mot de passe *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" name="confirm-password" id="exampleInputPassword2"
+                            placeholder="Confirmer mot de passe*" required>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="form-group mr-2">
+                        <input class="form-control " type="text" placeholder="Nom *" id="nputDefault" required>
+                    </div>
+                    <div class="form-group ">
+                        <input class="form-control " type="text" placeholder="Prénom *" id="nputDefault1" required>
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <input class="form-control " type="text" placeholder="Adresse *" id="nputDefault2" required>
+                </div>
+                <div class="form-group d-flex">
+                    <div class="form-group mr-2">
+                        <input class="form-control " type="text" placeholder="Code postale *" id="nputDefault3" required>
+                    </div>
+
+                    <input class="form-control " type="text" placeholder="Ville *" id="nputDefault4" required>
+                </div>
+                <div class="form-group">
+                    <select class="selectpicker countrypicker" data-flag="true"
+                        data-countries="AT,BE,BG,HR,CY,CZ,DK,EE,FI,FR,DE,GR,HU,IE,IT,LV,LT,LU,MT,NL,PL,PT,RO,SK,SI,ES,SE"></select>
+
+                </div>
+                <div class="form-group  d-flex">
+                    <div class="form-group mr-2">
+                        <input class="form-control " type="text" placeholder="Téléphone *" id="nputDefault5" required>
+                    </div>
+                    <input class="form-control " type="text" placeholder="Société " id="nputDefault6">
+                </div>
+                <div class="d-flex">
+                    <div class="mr-2  form-group">
+                        <select class="custom-select">
+                            <option selected>Né(e) le </option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="mr-2 form-group">
+                        <select class="custom-select">
+                            <option selected>Mois </option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="custom-select">
+                            <option selected>Année </option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+                <small id="emailHelp" class="form-text text-muted">* Champs obligatoires</small>
+        
+        </form>
+</div>
+
+
+    <div class="col-12 col-md-4 ">
+        <h4 class="text-primary pb-2"><i class="fa fa-id-card-o" aria-hidden="true"></i> Mode de paiement</h4>
+        <div class="card text-white bg-success mt-3" style="max-width: 20rem;">
+            <div class="card-header">
+                <div class="d-flex">
+                <h5 class="card-title mr-4">Carte bancaire</h5>
+                <img src="images/ic-mc.svg"  alt="" class="img-fluid mr-1">
+                <img src="images/ic-cb.svg"  alt="" class="img-fluid mr-1">
+                <img src="images/ic-visa.svg" alt="" class="img-fluid">
+            </div>
+        </div>
+            <div class="card-body">
+                
+                <p class="card-text text-justify">Vous serez redirigé(e) vers notre plateforme de paiement sécurisée une fois votre commande validée 
+                    en cliquant sur le bouton Passer la commande.</p>
+                </div>
+            </div>
+            <a href="" class="btn btn-success pl-3 mt-3 d-flex mr-3"><p class="mr-5">Paypal</p><img src="images/ic-paypal.svg"  alt="" class="ml-auto icon-payment"></a>
+    </div>
+    <div class="col-12 col-md-4 mb-1">
+        <h4 class="text-primary pb-3"><i class="fa fa-first-order" aria-hidden="true"></i> Vérification de commande</h4>
+        <div class="card bg-light mb-3 text-center" style="max-width: 20rem;">
+            <div class="card-header d-flex "><p>Commande</p><h4 class="ml-auto">20.00 €</h4></div>
+            <div class="card-body">
+                <h4 class="card-title ">Total: <h3 class="text-success ml-auto">20.00 €</h3></h4>
+                <button type="button" style="border-radius: 15px;" class="btn btn-warning px-2 mb-3"><i class="fa fa-hand-o-right mr-2" aria-hidden="true"></i>Passer commande</button>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

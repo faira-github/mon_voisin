@@ -1,0 +1,154 @@
+{% extends 'base.html.twig' %}
+{% block title %}Article{% endblock %}
+{% block body %}
+
+<article>
+    {% for message in app.flashes('success')%}
+    <div class="alert alert-succes<s">
+        {{message}}
+    </div>
+    {% endfor %}
+
+    {% if not form.vars.valid %}
+    <div class="alert alert-danger">
+        Erreur, veuillez à bien remplir les champs
+    </div>
+    {% endif %}
+
+    <h2 class="pt-4 pb-3"> {{ annonce.annonceTitle}} </h2>
+    <div class="row">
+        <div class="col-md-5 col-12">
+            <img src="{{ annonce.annoncePicture}}" alt="">
+        </div>
+        <div class="col-md-7 col-12">
+
+            <div class="metadata pb-3"> Crée le : {{ annonce.CreatedAt | date ('d/m/Y')}} à
+                {{ annonce.CreatedAt | date ('H:i')}} Dans
+                la categorie {{ annonce.categorys.nomCategorie}}</div>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th scope="row">Description</th>
+                        <td>
+                            <p>{{ annonce.annonceDescription|raw}}</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Budget</th>
+                        <td>
+                            <p class="text-warning ">Budget : {{ annonce.budget}} €</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Budget</th>
+                        <td>
+                            <p class="text-warning ">Budget : {{ annonce.budget}} €</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <a href="" class="btn btn-warning p-2 mt-3 mb-5 ">Postuler à cette annonce </a>
+
+            <div id="contactForm" class="mt-2">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn rounded-circle btn-primary p-5" data-toggle="modal" data-target="#exampleModal">
+                    Renseignement complementaire cliquez ici
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Renseignement complementaire</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{ form_start(Contactform) }}
+                <div class="row">
+
+                    <div class="col">
+                        <h6>Nom</h6>
+                        {{ form_widget(Contactform.firstname) }}
+                    </div>
+
+                    <div class="col">
+                        <h6>Prénom</h6>
+                        {{ form_widget(Contactform.lastname) }}
+                    </div>
+                </div>
+                <div class="row my-3">
+
+                    <div class="col">
+                        <h6>Numéro de téléphone</h6>
+                        {{ form_widget(Contactform.phone) }}
+                    </div>
+
+                    <div class="col">
+                        <h6>Adresse email</h6>
+                        {{ form_widget(Contactform.email) }}
+                    </div>
+                </div>
+                {{ form_rest(Contactform)}}
+
+                {{ form_end(Contactform) }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-warning mt-2">
+                                    Envoyer </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+
+</article>
+<section id="commentaires" class="pt-5">
+    <h5>{{ annonce.comments | length }} : Commentaires</h5>
+    {% for comment in annonce.comments %}
+    <div class="comment">
+        <table class="table table-striped">
+            <tr>
+                <div class="row">
+                    <div class="col-md-5 col-12">
+            <tr>
+
+                <td>
+                    {{ comment.author }}
+                    <div>
+                        (<small>{{comment.creaTedAt | date ('d/m/Y à H:i')}}</small>)
+                    </div>
+                </td>
+
+    </div>
+    <div class="col-md-7 col-12">
+        <td>
+            {{ comment.content | raw }}
+        </td>
+    </div>
+    </div>
+    </tr>
+    </table>
+    </div>
+    {% endfor %}
+    {% if app.user %}
+
+    {{ form_start(commentForm )}}
+    {{ form_row(commentForm.author, {'attr': {'placeholder': "Votre nom"}} )}}
+    {{ form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}})}}
+    <button type="submit" class="btn btn-warning">Commenter !</button>
+    {{ form_end(commentForm )}}
+
+    {% else %}
+    <h5>Vous ne pouvez pas commenter si vous n'êtes pas connecté !</h5>
+    <a href="{{path('security_login')}}" class="btn btn-warning my-3">Connexion</a>
+    {% endif %}
+</section>
+{% endblock %}
