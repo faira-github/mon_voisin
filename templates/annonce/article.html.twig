@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}Article{% endblock %}
 {% block body %}
-
 <article>
     {% for message in app.flashes('success')%}
-    <div class="alert alert-succes<s">
+    <div class="alert alert-success">
         {{message}}
     </div>
     {% endfor %}
 
-    {% if not form.vars.valid %}
+    {% if not Contactform.vars.valid %}
     <div class="alert alert-danger">
         Erreur, veuillez à bien remplir les champs
     </div>
@@ -107,8 +106,6 @@
                 
             </div>
         </div>
-
-
 </article>
 <section id="commentaires" class="pt-5">
     <h5>{{ annonce.comments | length }} : Commentaires</h5>

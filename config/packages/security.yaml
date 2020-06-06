@@ -1,12 +1,17 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
-            cost: 12
+            algorithm: auto
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
         in_database:
+            entity:
+                class: App\Entity\User
+                property: email
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
             entity:
                 class: App\Entity\User
                 property: email
@@ -19,10 +24,10 @@ security:
 
             provider: in_database
             form_login:
-                login_path: security_login
-                check_path: security_login
+                login_path: login
+                check_path: login
             logout:
-                path: /security_logout
+                path: /logout
                 target: accueil
 
             remember_me:
@@ -34,6 +39,9 @@ security:
                 # following line to always enable it.
                 #always_remember_me: true
                 token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
+            guard:
+                authenticators:
+                    - App\Security\UserAuthenticator
                 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

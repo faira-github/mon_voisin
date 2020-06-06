@@ -12,10 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(
- * fields= {"email"},
- * message= "L'email que vous avez indiqué est déà utilisé !")
  */
+
 class User implements UserInterface
 {
     /**
@@ -26,7 +24,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email()
      */
     private $email;
@@ -293,8 +291,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-
 
 
 }
