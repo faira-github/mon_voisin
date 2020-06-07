@@ -1,42 +1,75 @@
 {% extends 'base.html.twig' %}
+{% form_theme formLogin 'bootstrap_4_layout.html.twig' %}
+{% block title %}Connexion{% endblock %}
 
-{% block title %}Log in!{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+
+<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% endblock %}
+
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+{#
+<!-- Modal -->
+<div class="modal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Inscription</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                {{ form_start(formLogin, {'action': path('security_login'), 'method': 'POST', 'attr': {'class': 'w-100 form-signin', 'id': 'RegistrationType'} }) }}
+
+                {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+                <div class="mb-3">
+                    {{ form_row(formLogin.email, { 'label': 'Adresse email', 'attr': {'class': 'form-control', 'placeholder': 'Adresse email...' }})
+                    }}
+                </div>
+                {{ form_row(formLogin.password, {'label': 'Mot de passe', 'attr': {'class': 'form-control', 'placeholder': 'Mot de passe...'}})
+                }}
+                <div class="checkbox mb-3">
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+                    <label for="remember_me">Se souvenir de moi
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-warning mt-3 btn-block">Connexion !</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endif %}
+    </div>
+</div>#}
+{{ form_start(formLogin, {'action': path('app_login'), 'method': 'POST', 'attr': {'class': 'w-100 form-signin', 'id': 'RegistrationType'} }) }}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+{% if error %}
+<div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+{% endif %}
+<h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
+<div class="mb-3">
+    {{ form_row(formLogin.email, { 'label': 'Adresse email', 'for': 'username',  'attr': {'class': 'form-control','id': 'username','name': '_username', 'placeholder': 'Adresse email...'  }})
+    }}
+</div>
+{{ form_row(formLogin.password, {'label': 'Mot de passe', 'attr': {'class': 'form-control', 'name': '_password', 'placeholder': 'Mot de passe...'}})
+}}
+<div class="checkbox mb-3">
+    <input type="checkbox" id="remember_me" name="_remember_me" checked />
+    <label for="remember_me">Se souvenir de moi
+    </label>
+    <div class="form-group">
+        <button type="submit" class="btn btn-warning mt-3 btn-block">Connexion !</button>
+    </div>
+{#{{ form_row(formLogin_token) }}#}
+{{ form_widget(formLogin._token,  {'full_name': '_csrf_token'}) }}
+{#{ form_end(formLogin, {'render_rest': false}) }#}
 {% endblock %}

@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,8 +24,14 @@ class UserController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        //Mise en place du formulaire
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
+            
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 'error' => $error,
+            'formLogin' => $form->createView(),
+            ]);
     }
 
     /**

@@ -182,12 +182,12 @@ class User implements UserInterface
     }
 
 
-    public function getFirstName(): ?string
+    public function getFirstName()
     {
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName( $firstName): self
     {
         $this->firstName = $firstName;
 
