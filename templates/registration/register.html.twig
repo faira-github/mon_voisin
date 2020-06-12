@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<body style="background-image: url('./asset/images/voisins.png')">
+    
+</body>
+<h1 class="text-center py-5">Inscription sur le site</h1>
+{{ form_start(registrationForm, {'action': path('app_register'), 'method': 'POST', 'attr': {'class': 'w-100', 'id': 'RegistrationType'} }) }}
+<div class="row ">
+    <div class="col-12 col-md-4">
+        {{ form_row(registrationForm.name, {'label': 'Nom d\'utilisateur', 'attr': {'placeholder': 'Nom d\'utilisateur...'}}) }}
+    </div>
+    <div class="col-12 col-md-4 pl-0">
+        {{ form_row(registrationForm.firstName, {'label': 'Prénom d\'utilisateur', 'attr': {'placeholder': 'Prénom d\'utilisateur...'}}) }}
+    </div>
+    <div class="col-12 col-md-4">
+    {{ form_row(registrationForm.dateNaissance, {'label': 'Date de naissance', 'attr': {'placeholder': 'Date de naissance'}} ) }}
+    </div>
+</div>
+    {{ form_row(registrationForm.email, {'label': 'Adresse email', 'attr': {'placeholder': 'Adresse email...'}} ) }}
+    {{ form_row(registrationForm.password, {'label': 'Mot de passe', 'attr': {'placeholder': 'Mot de passe...'}}) }}
+    {{ form_row(registrationForm.confirm_password, {'label': 'Confirmation du mot de passe', 'attr': {'placeholder': 'Confirmation du mot de passe...'}}) }}
+    {{ form_row(registrationForm.adress, {'label': 'Adresse postale', 'attr': {'placeholder': 'Adresse postale...'}} ) }}
+    {{ form_row(registrationForm.codePostal, {'label': 'Code postale', 'attr': {'placeholder': 'Code postale...'}} ) }}
+    {{ form_row(registrationForm.villes, {'label': 'Ville'} ) }}
+    {{ form_row(registrationForm.telephone, {'label': 'Votre numéro téléphone', 'attr': {'placeholder': 'Votre numéro téléphone...'}} ) }}
+        {{ form_row(registrationForm.agreeTerms) }}
+
+        <button type="submit" class="btn btn-warning mb-4">Inscription</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

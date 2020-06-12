@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategorieRepository")
@@ -36,6 +37,12 @@ class Categorie
      * @ORM\OneToMany(targetEntity="App\Entity\Annonce", mappedBy="categorys")
      */
     private $annonces;
+
+    /**
+     *  @Gedmo\Slug(fields={"nomCategorie"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
 
     public function __construct()
@@ -108,5 +115,12 @@ class Categorie
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+ 
 
 }

@@ -54,8 +54,7 @@ class AnnonceController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $comment->setCreatedAt(new \DateTime())
-                    ->setArticle($annonce);
+            $comment->setArticle($annonce);
             $entityManager->persist($comment);
             $entityManager->flush();
 return $this->redirectToRoute('annonce_article', ['id' =>$annonce->getId()]);

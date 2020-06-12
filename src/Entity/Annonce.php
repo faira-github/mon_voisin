@@ -9,13 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AnnonceRepository")
  * @Vich\Uploadable
  * @UniqueEntity(
  * fields= {"annonceTitle"},
- * message= "Le titre que vous avez indiqué est déà utilisé !")
+ * message= "Le titre que vous avez indiqué est déjà utilisé !")
  */
 class Annonce
 {
@@ -47,12 +48,15 @@ class Annonce
     private $annoncePublier=true;
 
     /**
+     * @var \DateTime $created_at
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $CreatedAt;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string
      */
     private $annoncePicture;
 
@@ -80,7 +84,8 @@ class Annonce
     /**
      * @ORM\Column(type="datetime")
      *
-     * @var \DateTimeInterface|null
+     * @var \DateTime $updated_at
+     * @Gedmo\Timestampable(on="update")
      */
     private $updatedAt;
 
@@ -121,6 +126,12 @@ class Annonce
      * @ORM\JoinColumn(nullable=false)
      */
     private $users;
+
+    /**
+     * @Gedmo\Slug(fields={"annonceTitle"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
 
     public function __construct()
@@ -184,12 +195,6 @@ class Annonce
         return $this->CreatedAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
-    {
-        $this->CreatedAt = $CreatedAt;
-
-        return $this;
-    }
 
     public function getAnnoncePicture()
     {
@@ -264,13 +269,6 @@ class Annonce
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     /**
@@ -374,6 +372,10 @@ class Annonce
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
 
 
 }

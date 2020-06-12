@@ -1,7 +1,10 @@
 easy_admin:
-  site_name: "Mon Voisin d'accoté"
+  site_name: "Mon Voisin d'acoté"
+  user:
+    display_name: true
+    display_avatar: false
   formats:
-    date: d/m/Y
+    datetime: 'd/m/Y à H:I'
   design:
     brand_color: '#1ABC9C'
     form_theme:
@@ -99,6 +102,7 @@ easy_admin:
           - { property: nomCategorie }
           - { property: descriptionCategorie, type: 'fos_ckeditor' }
           - { property: annonces }
+          
 
     User: 
       class: App\Entity\User
@@ -115,7 +119,8 @@ easy_admin:
           - { property: name }
           - { property: firstName }
           - { property: email}
-          - { property: roles}
+          - { property: 'roles', label: 'Rôles', type: choice, type_options: {expanded: true, multiple: true, choices: {'Utilisateur':'ROLE_USER', 'Administrateur':'ROLE_ADMIN'}}}
+
           - { property: password }
           - { property: adress }
           - { property: codePostal }
@@ -136,17 +141,23 @@ easy_admin:
         fields:
           - { type: tab, label: 'Assets', icon: 'pencil'}
           - { type: 'group', label: 'Textes', icon: 'font'}
-          - { property: categorys }
+          - { property: users }
+          - { property: categorys, label: 'Catégories', type: 'entity', type_options: { class: 'App\Entity\Categories', multiple: true,by_reference: false, attr: { data-widget: 'select2' }}}
           - { property: annonceTitle } 
           - { property: annonceDescription, type: 'fos_ckeditor' }
+          - { property: comments, type: 'fos_ckeditor' }
           - { property: budget, help: 'saisir un prix au format décimal exemple : 120.45'}
           - { property: annonceOrder }
+          - { property: adress }
+          - { property: City }
+          - { property: postalCode }
           - { type: 'group', label: 'Image', icon: 'image'}
           - { property: imageFile, type: file }
           - { property: imageFile, type: vich_image, label: Image associée, help: 'Votre image doit faire 800px de largeur max' }
           - { type: tab, label: 'Réglages', icon: 'cog'}
           - { type: 'group', label: 'Paramètres', icon: 'cog'}
           - { property: annoncePublier }
+          
           - { property: CreatedAt }
     SocialNetwork:
       class: App\Entity\SocialNetwork

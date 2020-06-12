@@ -55,6 +55,12 @@
 {% if error %}
 <div class="alert alert-danger">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
 {% endif %}
+{% if app.user %}
+<div class="mb-3">
+    <a href="{{ path('app_logout') }}">Déconnexion</a>
+</div>
+{% endif %}
+
 <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
 <div class="mb-3">
     {{ form_row(formLogin.email, { 'label': 'Adresse email', 'for': 'username',  'attr': {'class': 'form-control','id': 'username','name': '_username', 'placeholder': 'Adresse email...'  }})
@@ -62,6 +68,8 @@
 </div>
 {{ form_row(formLogin.password, {'label': 'Mot de passe', 'attr': {'class': 'form-control', 'name': '_password', 'placeholder': 'Mot de passe...'}})
 }}
+{{ form_widget(formLogin._token,  {'full_name': '_csrf_token'}) }}
+
 <div class="checkbox mb-3">
     <input type="checkbox" id="remember_me" name="_remember_me" checked />
     <label for="remember_me">Se souvenir de moi
@@ -70,6 +78,6 @@
         <button type="submit" class="btn btn-warning mt-3 btn-block">Connexion !</button>
     </div>
 {#{{ form_row(formLogin_token) }}#}
-{{ form_widget(formLogin._token,  {'full_name': '_csrf_token'}) }}
-{#{ form_end(formLogin, {'render_rest': false}) }#}
+
+{{ form_end(formLogin, {'render_rest': false}) }}
 {% endblock %}

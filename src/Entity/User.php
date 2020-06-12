@@ -12,8 +12,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-
 class User implements UserInterface
 {
     /**
@@ -46,7 +46,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Regex("^[0-9]{5}$/")
+     * @Assert\Regex("/^[0-9]{5}$/")
      */
     private $codePostal;
 
@@ -95,7 +95,7 @@ class User implements UserInterface
 
     public function __toString()
     {
-        return "toto"; 
+        return $this->email; 
     }
 
     public function getId(): ?int
@@ -143,13 +143,7 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getPassword()
-    {
-        // not needed for apps that do not check user passwords
-    }
+
 
     /**
      * @see UserInterface
@@ -218,12 +212,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
 
     public function getVilles(): ?string
     {
@@ -293,4 +281,24 @@ class User implements UserInterface
     }
 
 
+
+    /**
+     * Get the value of password
+     */ 
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return  self
+     */ 
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
 }

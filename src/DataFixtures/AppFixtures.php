@@ -114,10 +114,8 @@ class AppFixtures extends Fixture
                 $annonce = new Annonce();
                 $annonce->setAnnonceTitle($faker->sentence())
                         ->setAnnoncePicture("https://placehold.it/400x350")
-                        ->setBudget($faker->currencyCode())
+                        ->setBudget($faker->mt_rand(40, 200))
                         ->setAnnonceDescription($faker->paragraph())
-                        ->setCreatedAt($faker->dateTimeBetween('-100 days', '-1 days'))
-                        ->setUpdatedAt($faker->dateTimeBetween('-100 days', '-1 days'))
                         ->setAdress($faker->address())
                         ->setPostalCode($faker->postcode())
                         ->setCity($faker->city())
@@ -136,7 +134,7 @@ class AppFixtures extends Fixture
 
                     $comment->setAuthor($faker->name)
                             ->setContent($content)
-                            ->setCreaTedAt($faker->dateTimeBetween('-' . $days . 'days'))
+                            
                             ->setArticle($annonce);
 
                 $manager->persist($comment);

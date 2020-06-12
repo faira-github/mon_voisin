@@ -27,9 +27,8 @@ class ArticleFixtures extends Fixture
                 $annonce->setAnnonceTitle($faker->sentence())
                         ->setAnnoncePicture($faker->imageUrl())
                         ->setAnnonceDescription($faker->paragraph())
-                        ->setCreatedAt($faker->dateTimeBetween('-6 months')
-                        )
-                        ->setCategorie($category);
+
+                        ->setCategorys($category);
 
                 $manager->persist($annonce);
 
@@ -43,7 +42,7 @@ class ArticleFixtures extends Fixture
 
                     $comment->setAuthor($faker->name)
                             ->setContent($content)
-                            ->setCreaTedAt($faker->dateTimeBetween('-' . $days . 'days'))
+                            
                             ->setArticle($annonce);
 
                 $manager->persist($comment);

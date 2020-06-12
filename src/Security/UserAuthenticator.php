@@ -39,7 +39,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        return 'login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
  /**
@@ -77,8 +77,8 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         //$user = $userProvider->loadUserByUsername($credentials['email']);
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
 
-        // var_dump($user->getFirstName());
-        // die;
+        //var_dump($user);
+        //die;
 
         if (!$user) {
             // fail authentication with a custom error
@@ -93,8 +93,11 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        $test = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        //echo '<script>console.log("Your stuff here")</script>';
+        //$test = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         //dd($credentials['password']);
+        $encodedPassword = $this->passwordEncoder->encodePassword($user, $credentials['password']);
+// dd($encodedPassword );
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -105,7 +108,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     {
         return $credentials['password'];
     }
- /**
+    /**
      * La méthode onAuthenticationSuccess est déclenchée automatiquement si checkCredentials return true
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -120,6 +123,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('app_login');
+        return $this->urlGenerator->generate('login');
     }
 }
+

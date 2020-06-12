@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
@@ -27,6 +28,8 @@ class Comment
     private $content;
 
     /**
+       * @var \DateTime $created_at
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
     private $creaTedAt;
@@ -36,6 +39,12 @@ class Comment
      * @ORM\JoinColumn(nullable=false)
      */
     private $article;
+
+    /**
+      * @Gedmo\Slug(fields={"author"})
+     * @ORM\Column(length=128, unique=true)
+     */
+    private $slug;
 
     public function getId(): ?int
     {
@@ -71,12 +80,6 @@ class Comment
         return $this->creaTedAt;
     }
 
-    public function setCreaTedAt(\DateTimeInterface $creaTedAt): self
-    {
-        $this->creaTedAt = $creaTedAt;
-
-        return $this;
-    }
 
     public function getArticle(): ?Annonce
     {
@@ -89,4 +92,11 @@ class Comment
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+  
 }
