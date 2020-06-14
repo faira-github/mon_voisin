@@ -36,11 +36,11 @@ class AppFixtures extends Fixture
         for ($u = 1; $u <= 4; $u++) {
             // Utilisateurs simples
             $user = new User();
-            $user->setEmail('voisin'.$u.'@accote.com')
+            $user->setEmail('user'.$u.'@agency.com')
                 ->setFirstName($faker->firstName())
                 ->setRoles(['ROLE_USER'])
                 ->setName($faker->lastName())
-                ->setDateNaissance($faker->dateTimeBetween('-100 days', '-1 days' , $timezone = null))
+                ->setDateNaissance($faker->dateTimeThisCentury('Y-m-d'))
                 ->setAdress($faker->address())
                 ->setCodePostal($faker->postcode())
                 ->setVilles($faker->city())
@@ -58,7 +58,7 @@ class AppFixtures extends Fixture
 
              // Utilisateurs admin
             $user = new User();
-            $user->setEmail('voisinadmin'.$u.'@accote.com');
+            $user->setEmail('admin'.$u.'@agency.com');
             $user->setFirstName($faker->firstName());
             $user->setRoles(['ROLE_ADMIN'])
                 ->setAdress($faker->address())
@@ -79,7 +79,7 @@ class AppFixtures extends Fixture
 
                // Utilisateurs super admin
             $user = new User();
-            $user->setEmail('voisinsuperadmin'.$u.'@accote.com');
+            $user->setEmail('superadmin'.$u.'@agency/.com');
             $user->setFirstName($faker->firstName());
             $user->setRoles(['ROLE_SUPER_ADMIN'])
                 ->setAdress($faker->address())
@@ -130,26 +130,23 @@ class AppFixtures extends Fixture
                     $comment = new Comment();
                     $content = '<p>' . join($faker->paragraphs(2), '</p><p>') . '</p>';
                     
-                    $days = (new \DateTime())->diff($annonce->getCreaTedAt())->days;
-
                     $comment->setAuthor($faker->name)
                             ->setContent($content)
-                            
                             ->setArticle($annonce);
 
                 $manager->persist($comment);
                 }
 
-                for ($j = 1; $j <= 3; $j++) {
+                // for ($j = 1; $j <= 3; $j++) {
                     
-                    $slider = new Slider();
-                    $slider->setTitre($faker->sentence())
-                            ->setImage("https://placehold.it/1920x500")
-                            ->setUpdatedAt($faker->dateTimeBetween('-6 months'))
-                            ->setDescription($faker->paragraph());
+                //     $slider = new Slider();
+                //     $slider->setTitre($faker->sentence())
+                //             ->setImage("https://placehold.it/1920x500")
                             
-                    $manager->persist($slider); 
-                }
+                //             ->setDescription($faker->paragraph());
+                            
+                //     $manager->persist($slider); 
+                // }
                 
                 for ($j = 1; $j <= 3; $j++) {
                     

@@ -61,7 +61,7 @@
                 <img src="{{ annonce.annoncePicture }}" alt="{{ annonce.annonceTitle }}"
                     class="img-fluid image-height mb-2 border">
 
-                <h4>{{ annonce.annonceTitle}}</h4>
+                <h4><a href="{{path('annonce_article', {"slug": annonce.slug}) }}">{{ annonce.annonceTitle}}</a> </h4>
                 <div class="metadata text-secondary pt-2">Crée le {{ annonce.CreatedAt | date ('d/m/Y')}} à
                     {{ annonce.CreatedAt | date ('H:i')}} Dans la categorie {{ annonce.categorys.nomCategorie}} </div>
             </div>

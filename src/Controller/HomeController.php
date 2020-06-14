@@ -37,6 +37,7 @@ class HomeController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Annonce::class);
         $annonces = $repository->findAll('Titre de l\'article');
         // Rendu de la page
+        
         return $this->render('home/accueil.html.twig',[
             'slider'=> $datas3,
             'annonces' => $annonces,

@@ -21,8 +21,7 @@
         </div>
         <div class="col-md-7 col-12">
 
-            <div class="metadata pb-3"> Crée le : {{ annonce.CreatedAt | date ('d/m/Y')}} à
-                {{ annonce.CreatedAt | date ('H:i')}} Dans
+            <div class="metadata pb-3"> Publié le : {{ annonce.CreatedAt | date ('d/m/Y à h\\hi')}} Dans
                 la categorie {{ annonce.categorys.nomCategorie}}</div>
             <table class="table table-striped">
                 <tbody>
@@ -120,7 +119,7 @@
                 <td>
                     {{ comment.author }}
                     <div>
-                        (<small>{{comment.creaTedAt | date ('d/m/Y à H:i')}}</small>)
+                        (<small>Publié le {{comment.creaTedAt | date ('d/m/Y à h\\hi')}}</small>)
                     </div>
                 </td>
 
@@ -134,12 +133,16 @@
     </tr>
     </table>
     </div>
+    {% else %}
+    <p>Il n'a pas encore de commentaire</p>
     {% endfor %}
     {% if app.user %}
 
     {{ form_start(commentForm )}}
     {{ form_row(commentForm.author, {'attr': {'placeholder': "Votre nom"}} )}}
+    {{ form_row(commentForm.email, {'attr': {'placeholder': "Votre email"}})}}
     {{ form_row(commentForm.content, {'attr': {'placeholder': "Votre commentaire"}})}}
+    {{ form_row(commentForm.rgba)}}
     <button type="submit" class="btn btn-warning">Commenter !</button>
     {{ form_end(commentForm )}}
 

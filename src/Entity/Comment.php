@@ -32,7 +32,7 @@ class Comment
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
-    private $creaTedAt;
+    private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Annonce", inversedBy="comments")
@@ -40,6 +40,15 @@ class Comment
      */
     private $article;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif = false;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $rgpd;
     /**
       * @Gedmo\Slug(fields={"author"})
      * @ORM\Column(length=128, unique=true)
@@ -75,11 +84,6 @@ class Comment
         return $this;
     }
 
-    public function getCreaTedAt(): ?\DateTimeInterface
-    {
-        return $this->creaTedAt;
-    }
-
 
     public function getArticle(): ?Annonce
     {
@@ -98,5 +102,38 @@ class Comment
         return $this->slug;
     }
 
-  
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getRgpd(): ?bool
+    {
+        return $this->rgpd;
+    }
+
+    public function setRgpd(bool $rgpd): self
+    {
+        $this->rgpd = $rgpd;
+
+        return $this;
+    }
+
+    /**
+     * Get $created_at
+     *
+     * @return  \DateTime
+     */ 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 }

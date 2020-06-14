@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class RegistrationType extends AbstractType
@@ -16,7 +17,11 @@ class RegistrationType extends AbstractType
             ->add('email')
             ->add('firstName')
             ->add('name')
-            ->add('dateNaissance')
+            ->add('dateNaissance', DateType::class, [
+                'widget' => 'single_text',
+			'html5' => false,
+			'attr' => ['class' => 'js-datepicker']
+                ])
             ->add('password', PasswordType::class)
             ->add('confirm_password', PasswordType::class)
             ->add('adress')

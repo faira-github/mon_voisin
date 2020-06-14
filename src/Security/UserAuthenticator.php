@@ -96,7 +96,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         //echo '<script>console.log("Your stuff here")</script>';
         //$test = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         //dd($credentials['password']);
-        $encodedPassword = $this->passwordEncoder->encodePassword($user, $credentials['password']);
+        //$encodedPassword = $this->passwordEncoder->encodePassword($user, $credentials['password']);
 // dd($encodedPassword );
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
@@ -123,7 +123,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('login');
+        return $this->urlGenerator->generate('app_login');
     }
 }
 

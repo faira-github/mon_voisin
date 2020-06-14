@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200609105802 extends AbstractMigration
+final class Version20200614133309 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,15 +22,11 @@ final class Version20200609105802 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_F65593E5989D9B62 ON annonce (slug)');
-        $this->addSql('ALTER TABLE categorie ADD slug VARCHAR(128) NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_497DD634989D9B62 ON categorie (slug)');
-        $this->addSql('ALTER TABLE comment ADD slug VARCHAR(128) NOT NULL');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_9474526C989D9B62 ON comment (slug)');
+        $this->addSql('ALTER TABLE comment CHANGE crea_ted_at created_at DATETIME NOT NULL');
         $this->addSql('ALTER TABLE condition_footer CHANGE category_id category_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE quartier CHANGE villes_id villes_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE slider CHANGE titre titre VARCHAR(255) DEFAULT NULL');
-        $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL');
+        $this->addSql('ALTER TABLE user CHANGE roles roles JSON NOT NULL, CHANGE activation_token activation_token VARCHAR(255) DEFAULT NULL, CHANGE reset_token reset_token VARCHAR(255) DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -38,14 +34,10 @@ final class Version20200609105802 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP INDEX UNIQ_F65593E5989D9B62 ON annonce');
-        $this->addSql('DROP INDEX UNIQ_497DD634989D9B62 ON categorie');
-        $this->addSql('ALTER TABLE categorie DROP slug');
-        $this->addSql('DROP INDEX UNIQ_9474526C989D9B62 ON comment');
-        $this->addSql('ALTER TABLE comment DROP slug');
+        $this->addSql('ALTER TABLE comment CHANGE created_at crea_ted_at DATETIME NOT NULL');
         $this->addSql('ALTER TABLE condition_footer CHANGE category_id category_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE quartier CHANGE villes_id villes_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE slider CHANGE titre titre VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_bin`');
+        $this->addSql('ALTER TABLE user CHANGE roles roles LONGTEXT CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_bin`, CHANGE activation_token activation_token VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`, CHANGE reset_token reset_token VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT \'NULL\' COLLATE `utf8mb4_unicode_ci`');
     }
 }

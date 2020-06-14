@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/", name="index")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
