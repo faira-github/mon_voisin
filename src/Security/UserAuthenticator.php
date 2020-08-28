@@ -21,6 +21,8 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Doctrine\ORM\EntityManagerInterface;
 
 
+
+
 class UserAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -39,7 +41,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
 
     public function supports(Request $request)
     {
-        return 'login' === $request->attributes->get('_route')
+        return 'app_login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
  /**
@@ -49,15 +51,14 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     {
         //dump($request->request->all());die;
         $credentials = [
-            'email' => $request->request->get('registration')['email'],
+            'username' => $request->request->get('registration')['username'],
             'password' => $request->request->get('registration')['password'],
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
             Security::LAST_USERNAME,
-            $credentials['email']
+            $credentials['username']
         );
-
         return $credentials;
     }
  /**
@@ -75,10 +76,10 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         // Load / create our user however you need.
         // You can do this by calling the user provider, or with custom logic here.
         //$user = $userProvider->loadUserByUsername($credentials['email']);
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
-        //var_dump($user);
-        //die;
+        // var_dump($user->getFirstName());
+        // die;
 
         if (!$user) {
             // fail authentication with a custom error
@@ -93,11 +94,12 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
      */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        //echo '<script>console.log("Your stuff here")</script>';
-        //$test = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        //dd($credentials['password']);
-        //$encodedPassword = $this->passwordEncoder->encodePassword($user, $credentials['password']);
-// dd($encodedPassword );
+        // A decommenter pour voir si isPasswordValid renvoie true ou false
+        // $test = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        // dd($test);
+        // A decommenter pour voir le mot de passe encodé
+        // $encodedPassword = $this->passwordEncoder->encodePassword($user, $credentials['password']);
+        // dd($encodedPassword );
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -117,7 +119,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
             return new RedirectResponse($targetPath);
         }
 
-        // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
+    return new RedirectResponse($this->urlGenerator->generate('home'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
@@ -126,4 +128,3 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
         return $this->urlGenerator->generate('app_login');
     }
 }
-

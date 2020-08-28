@@ -48,7 +48,7 @@ class Comment
     /**
      * @ORM\Column(type="boolean")
      */
-    private $rgpd;
+    private $rgpd = false;
     /**
       * @Gedmo\Slug(fields={"author"})
      * @ORM\Column(length=128, unique=true)

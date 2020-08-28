@@ -32,6 +32,7 @@ class Annonce
      */
     private $annonceTitle;
 
+    
     /**
      * @ORM\Column(type="text")
      */

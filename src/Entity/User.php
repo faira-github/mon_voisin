@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Une compte existe déjâ pour cette email")
  */
 class User implements UserInterface
 {
@@ -39,6 +39,13 @@ class User implements UserInterface
      */
     private $firstName;
 
+
+        /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=100, options={"default" : null})
+     */
+    private $username = null;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -51,18 +58,10 @@ class User implements UserInterface
     private $codePostal;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $activation_token;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $reset_token;
-    /**
      * @ORM\Column(type="integer")
      */
     private $telephone;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -70,6 +69,10 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * 
+     */
+    public $plainPassword = null;
     /**
      * @Assert\EqualTo(propertyPath="password", message="Vous n'avez pas tapez le même mode de passe")
      */
@@ -309,26 +312,17 @@ class User implements UserInterface
 
         return $this;
     }
-    public function getActivationToken(): ?string
-    {
-        return $this->activation_token;
-    }
 
-    public function setActivationToken(?string $activation_token): self
+    /**
+     * Set the value of username
+     *
+     * @param  string  $username
+     *
+     * @return  self
+     */ 
+    public function setUsername(string $username)
     {
-        $this->activation_token = $activation_token;
-
-        return $this;
-    }
-
-    public function getResetToken(): ?string
-    {
-        return $this->reset_token;
-    }
-
-    public function setResetToken(?string $reset_token): self
-    {
-        $this->reset_token = $reset_token;
+        $this->username = $username;
 
         return $this;
     }

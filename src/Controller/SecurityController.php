@@ -43,7 +43,7 @@ class SecurityController extends AbstractController
     }
 
         /**
-     * @Route("/connexion", name="security_login")
+     * @Route("/connexion", name="app_login")
      */
     public function login(AuthenticationUtils $authentificationUtils){
         //connexion 
@@ -53,7 +53,7 @@ class SecurityController extends AbstractController
 
         //Mise en place du formulair
         $user = new User();
-        $form = $this->createForm(RegistrationType::class, $user);
+        $form = $this->createForm(LoginFormType::class, $user);
         
         
         return $this->render('security/login.html.twig', [
@@ -64,7 +64,8 @@ class SecurityController extends AbstractController
         ]);
     }
         /**
-     * @Route("/deconnexion", name="security_logout")
+     * @Route("/deconnexion", name="logout")
      */
     public function logout(){}
 }
+
